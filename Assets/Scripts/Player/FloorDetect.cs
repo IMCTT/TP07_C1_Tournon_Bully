@@ -5,18 +5,22 @@ using UnityEngine;
 public class FloorDetect : MonoBehaviour
 {
     [SerializeField] public LayerMask groundMask;
-    public bool isGrounded = false;
+    [SerializeField] Vector2 boxSize = new Vector2(0.4f, 0.1f);
 
-    private void OnTriggerEnter2D(Collider2D other)
+    public bool IsGrounded { get; private set; }
+ 
+    void FixedUpdate()
     {
-        if (CheckLayerInMask(groundMask, other.gameObject.layer))
-        {
-
-            isGrounded = true;
-        }
+        IsGrounded = Physics2D.OverlapBox(transform.position, boxSize, 0f, groundMask);
     }
     public static bool CheckLayerInMask(LayerMask mask, int layer)
     {
         return mask == (mask | (1 << layer));
+    }
+    
+    void OnDrawGizmosSelected()
+    {
+        Gizmos.color = IsGrounded ? Color.green : Color.red;
+        Gizmos.DrawWireCube(transform.position, boxSize);
     }
 }

@@ -11,7 +11,7 @@ public class Playermovement : MonoBehaviour
     [SerializeField] Image playerLifebar;
     public bool powerUp = false;
     public bool invincible = false;
-    float invincibilityTimer;
+    private float invincibilityTimer;
 
     [Header("Movimiento")]
 
@@ -73,14 +73,14 @@ public class Playermovement : MonoBehaviour
 
     private void Movevement()
     {
-        if (Input.GetKeyDown(jump) && floorDetect.isGrounded == true)
+        if (Input.GetKeyDown(jump) && floorDetect.IsGrounded)
         {
             rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
 
             AudioSource.clip = SfxJump;
             AudioSource.Play();
 
-            floorDetect.isGrounded = false;
+            
 
 
 
