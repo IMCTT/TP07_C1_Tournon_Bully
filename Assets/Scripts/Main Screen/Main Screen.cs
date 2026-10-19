@@ -25,7 +25,7 @@ public class MainScreen : MonoBehaviour
 
     private void OnButtonStartGameClicked()
     {
-        SceneManager.LoadScene("SampleScene");
+        SceneManager.LoadScene("Game");
 
     }
     private void OnButtonEndGameClicked()
