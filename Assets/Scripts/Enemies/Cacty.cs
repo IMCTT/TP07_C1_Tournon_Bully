@@ -2,6 +2,8 @@ using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.UI;
 
+// Suggestion: Cacty es una copia de Enemies.cs que solo cambia la velocidad (3 en vez de 1) y el flip del sprite.
+// Unificalos en una sola clase con la velocidad serializada (o en un ScriptableObject de datos del enemigo).
 public class Cacty : MonoBehaviour
 {
     // Start is called before the first frame update
@@ -31,6 +33,7 @@ public class Cacty : MonoBehaviour
         looptime += Time.deltaTime;
         if (looptime < 2)
         {
+            // Warning: rb.linearVelocity se setea desde Update. Movelo a FixedUpdate.
             rb.linearVelocity = loopRight;
             sp.flipX = true;
         }
@@ -52,6 +55,7 @@ public class Cacty : MonoBehaviour
         {
             Destroy(enemy);
             Instantiate(enemyParticle, transform.position, quaternion.identity);
+            // Warning: Play() se llama sobre el prefab, no sobre la instancia que creaste en la línea anterior. No tiene efecto.
             enemyParticle.Play();
             AudioSource.clip = SfxEnemy;
             AudioSource.Play();

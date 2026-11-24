@@ -14,6 +14,7 @@ public class UIManager : MonoBehaviour
 
 
     [Header("Button")]
+    // Warning: los botones son [SerializeField] public. El public sobra y expone los campos. Pasalos a [SerializeField] private.
     [SerializeField] public Button optionsButton;
     
     [SerializeField] public Button optionsExitButton;
@@ -28,6 +29,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] AudioClip SFXUI;
     [SerializeField] private TMP_Text lifeText;
 
+    // Warning: moneyCounter es public y Money.cs lo incrementa directo. Hacelo private y exponé un método AddMoney() que además actualice el texto.
     public int moneyCounter;
 
 
@@ -47,6 +49,7 @@ public class UIManager : MonoBehaviour
     }
     private void Update()
     {
+        // Warning: actualizás el texto del contador todos los frames aunque no cambie. Llamá a setMoneyCount solo cuando se suma una moneda.
         setMoneyCount();
     }
 
@@ -56,11 +59,13 @@ public class UIManager : MonoBehaviour
         Time.timeScale = 0;
         inGamePanel.SetActive(false);
         mainPanel.SetActive(true);
+        // Suggestion: las dos líneas de clip y Play se repiten en los seis handlers. Extraelas a un método PlayButtonSound().
         audioSourceButton.clip = SFXUI;
         audioSourceButton.Play();
         
 
     }
+    // Suggestion: OnMenuButtonClicked no se usa (no se registra en ningún botón) y es igual a OnOptionsButtonClicked. Borralo.
     private void OnMenuButtonClicked()
     {
         Time.timeScale = 0;
@@ -124,6 +129,7 @@ public class UIManager : MonoBehaviour
 
     }
 
+    // Suggestion: el método debería ser PascalCase (SetMoneyCount) y el campo lifeText muestra monedas, no vida: renombralo a moneyText.
     void setMoneyCount()
     {
 
@@ -139,6 +145,7 @@ public class UIManager : MonoBehaviour
         optionsButton.onClick.RemoveAllListeners();
         optionsExitButton.onClick.RemoveAllListeners();
         menuOptionsButton.onClick.RemoveAllListeners();
+        // Bug: en OnDestroy se agrega un listener en vez de quitarlo. Tiene que ser menuExitButton.onClick.RemoveAllListeners();
         menuExitButton.onClick.AddListener(OnMenuExitButtonClicked);
         menuPlayButton.onClick.RemoveAllListeners();
         menuWinButton.onClick.RemoveAllListeners();

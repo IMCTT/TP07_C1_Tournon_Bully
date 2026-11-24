@@ -21,6 +21,7 @@ public class Health : MonoBehaviour
                 AudioSource.Play();
 
                 Destroy(gameObject);
+                // Suggestion: el 0.25f de curación está hardcodeado y es el mismo valor que el daño en Playermovement.cs. Serializalo o llevalo a un ScriptableObject.
                 playerLifebar.fillAmount += 0.25f;
             }
         }
